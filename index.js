@@ -9,11 +9,11 @@ let port = process.env.PORT || 3678;
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.listen(3678, function () {
+app.listen(3678, () => {
     console.log(`Api rest work in http://localhost:${port}`);
 });
 
-app.get('/hello/:name?', function (req, res) {
+app.get('/hello/:name?', (req, res) => {
     const name = req.params.name || 'not found';
     res.status(200).send({
         data: [1, 2, 3],
