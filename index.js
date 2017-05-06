@@ -14,5 +14,8 @@ app.listen(3678, function () {
 });
 
 app.get('/hello', function (req, res) {
-    res.send({text: "Hello Word!"})
+    res.status(200).send({
+        data: [1, 2, 3],
+        text: "Hello Word!"
+    })
 });
