@@ -12,3 +12,7 @@ app.use(bodyParser.json());
 app.listen(3678, function () {
     console.log(`Api rest work in http://localhost:${port}`);
 });
+
+app.get('/hello', function (req, res) {
+    res.send({text: "Hello Word!"})
+});
