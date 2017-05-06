@@ -14,7 +14,7 @@ app.listen(3678, function () {
 });
 
 app.get('/hello/:name?', function (req, res) {
-    const name = req.params.name;
+    const name = req.params.name || 'not found';
     res.status(200).send({
         data: [1, 2, 3],
         text: `Hello Word ${name}!`
