@@ -13,9 +13,10 @@ app.listen(3678, function () {
     console.log(`Api rest work in http://localhost:${port}`);
 });
 
-app.get('/hello', function (req, res) {
+app.get('/hello/:name?', function (req, res) {
+    const name = req.params.name;
     res.status(200).send({
         data: [1, 2, 3],
-        text: "Hello Word!"
+        text: `Hello Word ${name}!`
     })
 });
