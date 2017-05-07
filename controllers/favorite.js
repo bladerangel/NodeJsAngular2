@@ -16,7 +16,7 @@ function getFavorite(req, res) {
 }
 
 function getFavorites(req, res) {
-    Favorite.find({description: 'aa'}).sort('-title').exec()
+    Favorite.find().sort('-title').exec()
         .then((favorites) => {
             if (!favorites.length)
                 res.status(404).send({message: 'Empty favorites'});
