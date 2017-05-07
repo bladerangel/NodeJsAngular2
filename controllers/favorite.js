@@ -8,6 +8,35 @@ function hello(req, res) {
     })
 }
 
+function getFavorite(req, res) {
+    const favoriteId = req.params.id;
+    res.status(200).send({data: favoriteId});
+}
+
+function getFavorites(req, res) {
+
+}
+
+function saveFavorite(req, res) {
+    const params = req.body;
+    res.status(200).send({favorite: params});
+}
+
+function updateFavorite(req, res) {
+    const params = req.body;
+    res.status(200).send({update: true, favorite: params});
+}
+
+function deleteFavorite(req, res) {
+    const favoriteId = req.params.id;
+    res.status(200).send({delete: true, data: favoriteId});
+}
+
 module.exports = {
-    hello
+    hello,
+    getFavorite,
+    getFavorites,
+    saveFavorite,
+    updateFavorite,
+    deleteFavorite
 };
