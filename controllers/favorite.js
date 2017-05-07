@@ -12,7 +12,13 @@ function hello(req, res) {
 
 function getFavorite(req, res) {
     const favoriteId = req.params.id;
-    res.status(200).send({data: favoriteId});
+    Favorite.findById(favoriteId)
+        .then((favorite) =>
+            res.status(200).send({favorite})
+        )
+        .catch((err) =>
+            res.status(404).send({message: 'Not found favorite'})
+        );
 }
 
 function getFavorites(req, res) {
@@ -21,7 +27,7 @@ function getFavorites(req, res) {
             if (!favorites.length)
                 res.status(404).send({message: 'Empty favorites'});
             else
-                res.status(200).send({favorites: favorites});
+                res.status(200).send({favorites});
         })
         .catch((err) =>
             res.status(500).send({message: 'Error get favorites'})
@@ -38,7 +44,7 @@ function saveFavorite(req, res) {
 
     favorite.save()
         .then((favoriteStored) =>
-            res.status(200).send({favorite: favoriteStored}))
+            res.status(200).send({favoriteStored}))
         .catch((err) =>
             res.status(500).send({message: 'Error save favorite'})
         );
