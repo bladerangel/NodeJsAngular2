@@ -16,14 +16,23 @@ function getFavorite(req, res) {
 }
 
 function getFavorites(req, res) {
-    Favorite.find({}, (err, favorites) => {
-        if (err) {
-            res.status(500).send({message: 'Error get favorites'});
-        } else if (!favorites) {
-            res.status(404).send({message: 'Empty favorites'});
-        }
-        res.status(200).send({favorites: favorites});
-    });
+    /*Favorite.find({}).sort('-title').exec((err, favorites) => {
+     if (err) {
+     res.status(500).send({message: 'Error get favorites'});
+     } else if (!favorites.length) {
+     res.status(404).send({message: 'Empty favorites'});
+     }
+     res.status(200).send({favorites: favorites});
+     });*/
+
+    Favorite.find({description: 'aa'}).sort('-title').exec()
+        .then((favorites) => {
+                if (!favorites.length)
+                    res.status(404).send({message: 'Empty favorites'});
+                else
+                    res.status(200).send({favorites: favorites});
+            }
+        ).catch((err) => res.status(500).send({message: 'Error get favorites'}));
 }
 
 function saveFavorite(req, res) {
