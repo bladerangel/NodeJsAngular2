@@ -16,7 +16,14 @@ function getFavorite(req, res) {
 }
 
 function getFavorites(req, res) {
-
+    Favorite.find({}, (err, favorites) => {
+        if (err) {
+            res.status(500).send({message: 'Error get favorites'});
+        } else if (!favorites) {
+            res.status(404).send({message: 'Empty favorites'});
+        }
+        res.status(200).send({favorites: favorites});
+    });
 }
 
 function saveFavorite(req, res) {
