@@ -16,23 +16,16 @@ function getFavorite(req, res) {
 }
 
 function getFavorites(req, res) {
-    /*Favorite.find({}).sort('-title').exec((err, favorites) => {
-     if (err) {
-     res.status(500).send({message: 'Error get favorites'});
-     } else if (!favorites.length) {
-     res.status(404).send({message: 'Empty favorites'});
-     }
-     res.status(200).send({favorites: favorites});
-     });*/
-
     Favorite.find({description: 'aa'}).sort('-title').exec()
         .then((favorites) => {
-                if (!favorites.length)
-                    res.status(404).send({message: 'Empty favorites'});
-                else
-                    res.status(200).send({favorites: favorites});
-            }
-        ).catch((err) => res.status(500).send({message: 'Error get favorites'}));
+            if (!favorites.length)
+                res.status(404).send({message: 'Empty favorites'});
+            else
+                res.status(200).send({favorites: favorites});
+        })
+        .catch((err) =>
+            res.status(500).send({message: 'Error get favorites'})
+        );
 }
 
 function saveFavorite(req, res) {
@@ -43,12 +36,12 @@ function saveFavorite(req, res) {
     favorite.description = params.description;
     favorite.url = params.url;
 
-    favorite.save((err, favoriteStored) => {
-        if (err) {
-            res.status(500).send({message: 'Error save favorite'});
-        }
-        res.status(200).send({favorite: favoriteStored});
-    });
+    favorite.save()
+        .then((favoriteStored) =>
+            res.status(200).send({favorite: favoriteStored}))
+        .catch((err) =>
+            res.status(500).send({message: 'Error save favorite'})
+        );
 }
 
 function updateFavorite(req, res) {
