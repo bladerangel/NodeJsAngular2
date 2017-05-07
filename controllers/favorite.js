@@ -4,6 +4,7 @@ let Favorite = require('../models/favorite');
 
 function hello(req, res) {
     const name = req.params.name || 'not found';
+
     res.status(200).send({
         data: [1, 2, 3],
         text: `Hello Word ${name}!`
@@ -12,10 +13,14 @@ function hello(req, res) {
 
 function getFavorite(req, res) {
     const favoriteId = req.params.id;
+
     Favorite.findById(favoriteId)
-        .then((favorite) =>
-            res.status(200).send({favorite})
-        )
+        .then((favorite) => {
+            if (favorite !== null)
+                res.status(200).send({favorite});
+            else
+                res.status(404).send({message: 'Not found favorite'});
+        })
         .catch((err) =>
             res.status(404).send({message: 'Not found favorite'})
         );
@@ -55,17 +60,30 @@ function updateFavorite(req, res) {
     const params = req.body;
 
     Favorite.findByIdAndUpdate(favoriteId, params)
-        .then((favoriteUpdated) =>
-            res.status(200).send({favoriteUpdated})
-        )
+        .then((favoriteUpdated) => {
+            if (favoriteUpdated !== null)
+                res.status(200).send({favoriteUpdated});
+            else
+                res.status(404).send({message: 'Not found favorite'});
+        })
         .catch((err) =>
-            res.status(500).send({message: 'Error update favorite'})
+            res.status(404).send({message: 'Not found favorite'})
         );
 }
 
 function deleteFavorite(req, res) {
     const favoriteId = req.params.id;
-    res.status(200).send({delete: true, data: favoriteId});
+
+    Favorite.findByIdAndRemove(favoriteId)
+        .then((favoriteRemove) => {
+            if (favoriteRemove !== null)
+                res.status(200).send({favoriteRemove});
+            else
+                res.status(404).send({message: 'Not found favorite'});
+        })
+        .catch((err) =>
+            res.status(404).send({message: 'Not found favorite'})
+        );
 }
 
 module.exports = {
