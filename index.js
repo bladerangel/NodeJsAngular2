@@ -4,6 +4,7 @@ let app = require('./app');
 let port = process.env.PORT || 3678;
 let mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/favoritedb', (err, res) => {
     if (err) {
         throw err;
