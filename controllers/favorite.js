@@ -51,8 +51,16 @@ function saveFavorite(req, res) {
 }
 
 function updateFavorite(req, res) {
+    const favoriteId = req.params.id;
     const params = req.body;
-    res.status(200).send({update: true, favorite: params});
+
+    Favorite.findByIdAndUpdate(favoriteId, params)
+        .then((favoriteUpdated) =>
+            res.status(200).send({favoriteUpdated})
+        )
+        .catch((err) =>
+            res.status(500).send({message: 'Error update favorite'})
+        );
 }
 
 function deleteFavorite(req, res) {
